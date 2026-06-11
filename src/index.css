@@ -1,0 +1,321 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ══════════════════════════════════════════════════════════════════
+   THEME TOKENS
+   DARK  → "Cosmic Violet" — near-black space, violet + cyan neon
+   LIGHT → "Arctic Pro"   — pure white, ocean blue + emerald green
+══════════════════════════════════════════════════════════════════ */
+
+/* ── DARK MODE (default) ─────────────────────────────────────── */
+:root,
+:root.dark {
+  color-scheme: dark;
+
+  /* Backgrounds */
+  --c-bg:          4   6  15;     /* #04060f near-black navy   */
+  --c-surface:     8  12  28;     /* #080c1c deep navy         */
+  --c-surface-2:  15  21  44;     /* #0f152c lighter navy      */
+
+  /* Accent palette */
+  --c-primary:   139  92 246;     /* #8b5cf6  violet-500       */
+  --c-secondary:  34 211 238;     /* #22d3ee  cyan-400         */
+  --c-tertiary:  167 139 250;     /* #a78bfa  violet-400       */
+
+  /* Text */
+  --c-text:      241 245 249;     /* #f1f5f9  slate-100        */
+  --c-muted:     100 116 139;     /* #64748b  slate-500        */
+  --c-subtle:     71  85 105;     /* #475569  slate-600        */
+
+  /* Borders & glass */
+  --c-border:    139  92 246;
+  --c-border-op: 0.15;
+  --glass-bg:    rgba(8,12,28,0.80);
+  --glass-border:rgba(139,92,246,0.18);
+  --glass-shadow:rgba(139,92,246,0.08);
+
+  /* Scrollbar */
+  --sb-track: #080c1c;
+  --sb-thumb: #4c1d95;
+
+  /* Grain */
+  --grain-op: 0.025;
+
+  /* Semantic shortcuts used everywhere */
+  --col-heading: rgb(var(--c-text));
+  --col-body:    rgba(var(--c-text)/0.7);
+  --col-muted:   rgb(var(--c-muted));
+  --col-card:    var(--glass-bg);
+  --col-border:  var(--glass-border);
+  --col-accent:  rgb(var(--c-primary));
+  --col-accent2: rgb(var(--c-secondary));
+}
+
+/* ── LIGHT MODE ──────────────────────────────────────────────── */
+:root:not(.dark) {
+  color-scheme: light;
+
+  /* Backgrounds */
+  --c-bg:        248 251 255;    /* #f8fbff  pale blue-white   */
+  --c-surface:   255 255 255;    /* #ffffff  pure white        */
+  --c-surface-2: 239 246 255;    /* #eff6ff  blue-50           */
+
+  /* Accent palette — completely different from dark! */
+  --c-primary:    37  99 235;    /* #2563eb  blue-600          */
+  --c-secondary:   5 150 105;    /* #059669  emerald-600       */
+  --c-tertiary:   59 130 246;    /* #3b82f6  blue-400          */
+
+  /* Text */
+  --c-text:       15  28  46;    /* #0f1c2e  dark navy         */
+  --c-muted:      75  85  99;    /* #4b5563  gray-600          */
+  --c-subtle:    107 114 128;    /* #6b7280  gray-500          */
+
+  /* Borders & glass */
+  --c-border:     37  99 235;
+  --c-border-op: 0.18;
+  --glass-bg:    rgba(255,255,255,0.92);
+  --glass-border:rgba(37,99,235,0.15);
+  --glass-shadow:0 8px 32px rgba(37,99,235,0.10),0 2px 8px rgba(0,0,0,0.06);
+
+  /* Scrollbar */
+  --sb-track: #eff6ff;
+  --sb-thumb: #93c5fd;
+
+  /* Grain — less noisy in light */
+  --grain-op: 0.012;
+
+  /* Semantic */
+  --col-heading: rgb(var(--c-text));
+  --col-body:    rgba(var(--c-text)/0.75);
+  --col-muted:   rgb(var(--c-muted));
+  --col-card:    var(--glass-bg);
+  --col-border:  var(--glass-border);
+  --col-accent:  rgb(var(--c-primary));
+  --col-accent2: rgb(var(--c-secondary));
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   BASE
+══════════════════════════════════════════════════════════════════ */
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Sora', sans-serif;
+  background: rgb(var(--c-bg));
+  color: var(--col-heading);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+  transition: background 0.5s ease, color 0.4s ease;
+}
+
+::selection {
+  background: rgba(var(--c-primary)/0.25);
+  color: rgb(var(--c-primary));
+}
+
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track  { background: var(--sb-track); }
+::-webkit-scrollbar-thumb  { background: var(--sb-thumb); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: rgb(var(--c-primary)); }
+
+/* Grain */
+#root::after {
+  content: '';
+  position: fixed; inset: -50%;
+  width: 200%; height: 200%;
+  pointer-events: none; z-index: 9998;
+  opacity: var(--grain-op);
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  animation: grain 8s steps(10) infinite;
+}
+@keyframes grain {
+  0%,100% { transform: translate(0,0); }
+  10%  { transform: translate(-5%,-10%); }
+  30%  { transform: translate(7%,-25%); }
+  50%  { transform: translate(-15%,10%); }
+  70%  { transform: translate(0%,15%); }
+  90%  { transform: translate(-10%,10%); }
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   COMPONENT LAYER
+══════════════════════════════════════════════════════════════════ */
+@layer components {
+
+  /* ── Glass card ──────────────────────────────────────────── */
+  .glass {
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px) saturate(1.4);
+    -webkit-backdrop-filter: blur(20px) saturate(1.4);
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--glass-shadow);
+  }
+  .glass:hover {
+    border-color: rgba(var(--c-primary)/0.35);
+    box-shadow: 0 0 40px rgba(var(--c-primary)/0.12), var(--glass-shadow);
+  }
+
+  /* ── Text gradient ───────────────────────────────────────── */
+  .text-gradient {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(135deg, rgb(var(--c-primary)), rgb(var(--c-secondary)));
+  }
+
+  /* ── Section container ───────────────────────────────────── */
+  .section-wrap { @apply py-20 md:py-28 px-4 sm:px-6 max-w-6xl mx-auto; }
+
+  /* ── Theme-aware typography ──────────────────────────────── */
+  .t-heading { color: var(--col-heading); }
+  .t-body    { color: var(--col-body); }
+  .t-muted   { color: var(--col-muted); }
+
+  /* ── Pill tag ────────────────────────────────────────────── */
+  .tag-pill {
+    @apply text-xs px-3 py-1 rounded-full font-mono transition-all duration-200;
+    background: rgba(var(--c-primary)/0.08);
+    border: 1px solid rgba(var(--c-primary)/0.20);
+    color: rgb(var(--c-primary));
+  }
+  .tag-pill:hover {
+    background: rgba(var(--c-primary)/0.16);
+    border-color: rgba(var(--c-primary)/0.40);
+  }
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   LIGHT MODE GLOBAL CLASS OVERRIDES
+   Forces ALL dark-mode-specific Tailwind classes to look correct
+   in light mode — no need to update every single component
+══════════════════════════════════════════════════════════════════ */
+
+/* ── Text ──────────────────────────────────────────────────── */
+:root:not(.dark) .text-white         { color: rgb(var(--c-text)) !important; }
+:root:not(.dark) .text-gray-100      { color: rgb(var(--c-text)) !important; }
+:root:not(.dark) .text-gray-200      { color: rgba(var(--c-text)/0.9) !important; }
+:root:not(.dark) .text-gray-300      { color: rgba(var(--c-text)/0.75) !important; }
+:root:not(.dark) .text-gray-400      { color: rgb(var(--c-muted)) !important; }
+:root:not(.dark) .text-gray-500      { color: rgb(var(--c-subtle)) !important; }
+:root:not(.dark) .text-gray-600      { color: rgb(var(--c-subtle)) !important; }
+:root:not(.dark) .text-slate-100     { color: rgb(var(--c-text)) !important; }
+:root:not(.dark) .text-slate-200     { color: rgba(var(--c-text)/0.85) !important; }
+:root:not(.dark) .text-slate-300     { color: rgba(var(--c-text)/0.7) !important; }
+:root:not(.dark) .text-slate-400     { color: rgb(var(--c-muted)) !important; }
+:root:not(.dark) .text-slate-500     { color: rgb(var(--c-subtle)) !important; }
+
+/* Accent colors */
+:root:not(.dark) .text-accent        { color: rgb(var(--c-primary)) !important; }
+:root:not(.dark) .text-violet        { color: rgb(var(--c-tertiary)) !important; }
+
+/* ── Backgrounds — white-transparency (dark-specific) ──────── */
+:root:not(.dark) .bg-background      { background-color: rgb(var(--c-bg)) !important; }
+:root:not(.dark) .bg-surface         { background-color: rgb(var(--c-surface)) !important; }
+
+/* White alpha backgrounds → blue-tinted equivalents */
+:root:not(.dark) [class*="bg-white\/"]  {
+  background-color: rgba(var(--c-primary)/0.05) !important;
+}
+:root:not(.dark) .bg-black\/60        { background-color: rgba(255,255,255,0.85) !important; }
+:root:not(.dark) .bg-black\/40        { background-color: rgba(255,255,255,0.7)  !important; }
+
+/* Override specific fractions  */
+:root:not(.dark) .bg-white\/5         { background-color: rgba(var(--c-primary)/0.05) !important; }
+:root:not(.dark) .bg-white\/8         { background-color: rgba(var(--c-primary)/0.07) !important; }
+:root:not(.dark) .bg-white\/10        { background-color: rgba(var(--c-primary)/0.08) !important; }
+:root:not(.dark) .bg-white\/20        { background-color: rgba(var(--c-primary)/0.12) !important; }
+
+/* ── Borders ─────────────────────────────────────────────── */
+:root:not(.dark) [class*="border-white\/"] {
+  border-color: rgba(var(--c-primary)/0.12) !important;
+}
+:root:not(.dark) .border-white\/\[0\.05\] { border-color: rgba(var(--c-primary)/0.08) !important; }
+:root:not(.dark) .border-white\/\[0\.06\] { border-color: rgba(var(--c-primary)/0.10) !important; }
+:root:not(.dark) .border-white\/10        { border-color: rgba(var(--c-primary)/0.12) !important; }
+:root:not(.dark) .border-white\/20        { border-color: rgba(var(--c-primary)/0.18) !important; }
+:root:not(.dark) .border-accent\/\[0\.15\] { border-color: rgba(var(--c-primary)/0.2) !important; }
+:root:not(.dark) .border-accent\/20       { border-color: rgba(var(--c-primary)/0.2) !important; }
+:root:not(.dark) .border-accent\/60       { border-color: rgba(var(--c-primary)/0.5) !important; }
+
+/* ── Dark inline-style backgrounds ──────────────────────── */
+/* Components that use style={{ background: '#08090d' }} etc */
+:root:not(.dark) [style*="background: #08"],
+:root:not(.dark) [style*="background: #09"],
+:root:not(.dark) [style*="background: #0a"],
+:root:not(.dark) [style*="background: #0d"],
+:root:not(.dark) [style*="background: #0f"],
+:root:not(.dark) [style*="background: rgb(8"],
+:root:not(.dark) [style*="background: rgb(10"],
+:root:not(.dark) [style*="background: rgb(15"] {
+  background: rgb(var(--c-surface)) !important;
+}
+
+/* Admin page specific overrides */
+:root:not(.dark) [style*="background: '#080a12'"],
+:root:not(.dark) [style*="background: '#0c0e1a'"] {
+  background: rgb(var(--c-bg)) !important;
+}
+
+/* ── Placeholder text ────────────────────────────────────── */
+:root:not(.dark) .placeholder-gray-500::placeholder { color: rgb(var(--c-subtle)) !important; }
+
+/* ── Input fields in light mode ──────────────────────────── */
+:root:not(.dark) input, :root:not(.dark) textarea, :root:not(.dark) select {
+  color: rgb(var(--c-text));
+  background: rgba(var(--c-primary)/0.04);
+  border-color: rgba(var(--c-primary)/0.2);
+}
+:root:not(.dark) input:focus, :root:not(.dark) textarea:focus {
+  border-color: rgba(var(--c-primary)/0.5);
+  background: rgba(var(--c-primary)/0.06);
+  outline: none;
+}
+
+/* ── Skill bars & progress ───────────────────────────────── */
+:root:not(.dark) .bg-surfaceLight { background: rgb(var(--c-surface-2)) !important; }
+
+/* ── Section heading decorative bar ─────────────────────── */
+:root:not(.dark) [style*="linear-gradient(90deg,#f59e0b"] {
+  background: linear-gradient(90deg, rgb(var(--c-primary)), rgb(var(--c-secondary))) !important;
+}
+:root:not(.dark) [style*="linear-gradient(90deg,#3ef2d0"],
+:root:not(.dark) [style*="linear-gradient(90deg,rgb(var(--violet"] {
+  background: linear-gradient(90deg, rgb(var(--c-primary)), rgb(var(--c-secondary))) !important;
+}
+
+/* ── Hover accent colors ─────────────────────────────────── */
+:root:not(.dark) .hover\:text-accent:hover { color: rgb(var(--c-primary)) !important; }
+:root:not(.dark) .focus\:border-accent\/60:focus { border-color: rgba(var(--c-primary)/0.6) !important; }
+
+/* ══════════════════════════════════════════════════════════════════
+   SMOOTH THEME TRANSITIONS
+══════════════════════════════════════════════════════════════════ */
+*, *::before, *::after {
+  transition-property: background-color, border-color, color, box-shadow, fill, stroke;
+  transition-duration: 0.35s;
+  transition-timing-function: ease;
+}
+/* Exclude transitions that would break animations */
+.animate-spin, .animate-float, [data-framer-motion] {
+  transition-property: color, fill, stroke;
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   RESPONSIVE UTILITIES
+══════════════════════════════════════════════════════════════════ */
+@media (max-width: 640px) {
+  .font-display { letter-spacing: -0.02em; }
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   ACCESSIBILITY — REDUCE MOTION
+══════════════════════════════════════════════════════════════════ */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  #root::after { display: none; }
+}
