@@ -140,7 +140,7 @@ const defaultData = {
       org: 'Trichy SRM Medical College Hospital and Research Centre',
       date: '2026',
       desc: 'Won First Prize for "Dextra" — an innovative assistive hand orthosis system designed to support neuromuscular rehabilitation by enabling improved hand movement through intelligent and adaptive AI/ML technology. Represented the Dept. of AI & ML, School of Computing.',
-      image: '',
+      image: 'https://kellarbpqpgpxzimzsmv.supabase.co/storage/v1/object/public/achievement-images/ach_1781188731896.jpg',
     },
   ],
 
@@ -148,7 +148,7 @@ const defaultData = {
   achievementImages: [
     { id: '1', url: '/ach1.png',  caption: 'Chem-E-Ignite 2025 · IIT Madras', sub: 'Winner — Startup Pitch' },
     { id: '2', url: '/ach2.png',  caption: 'Prayan 2026 Hackathon · NIT Trichy', sub: 'Winner — Sponsored by Khel.ai' },
-    { id: '3', url: '',           caption: 'Genesis 2026 · SRM Medical College', sub: 'First Prize — Dextra (Hand Orthosis)' },
+    { id: '3', url: 'https://kellarbpqpgpxzimzsmv.supabase.co/storage/v1/object/public/achievement-images/ach_1781188731896.jpg', caption: 'Genesis 2026 Winner', sub: 'First Prize — Dextra Project · SRM Medical College' },
   ],
 
   experience: {
