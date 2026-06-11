@@ -140,7 +140,7 @@ const defaultData = {
       org: 'Trichy SRM Medical College Hospital and Research Centre',
       date: '2026',
       desc: 'Won First Prize for "Dextra" — an innovative assistive hand orthosis system designed to support neuromuscular rehabilitation by enabling improved hand movement through intelligent and adaptive AI/ML technology. Represented the Dept. of AI & ML, School of Computing.',
-      image: 'https://kellarbpqpgpxzimzsmv.supabase.co/storage/v1/object/public/achievement-images/ach_1781188731896.jpg',
+      image: '',
     },
   ],
 
