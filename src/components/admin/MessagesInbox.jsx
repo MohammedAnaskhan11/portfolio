@@ -154,22 +154,7 @@ export default function MessagesInbox() {
         ))}
       </div>
 
-      {/* SQL reminder if no table */}
-      <div className="mt-6 p-4 rounded-xl border border-slate-700/30 bg-slate-800/20 text-xs font-mono text-slate-600">
-        <p className="text-slate-500 mb-2">⚙️ Required Supabase SQL (run once):</p>
-        <pre className="text-slate-600 leading-relaxed overflow-x-auto">{`CREATE TABLE IF NOT EXISTS messages (
-  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
-  name TEXT NOT NULL,
-  email TEXT NOT NULL,
-  subject TEXT,
-  message TEXT NOT NULL,
-  read BOOLEAN DEFAULT FALSE,
-  created_at TIMESTAMPTZ DEFAULT NOW()
-);
-ALTER TABLE messages ENABLE ROW LEVEL SECURITY;
-CREATE POLICY "public_insert" ON messages FOR INSERT WITH CHECK (true);
-CREATE POLICY "admin_all" ON messages FOR ALL USING (true);`}</pre>
-      </div>
     </div>
   );
 }
+
