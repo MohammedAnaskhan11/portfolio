@@ -28,7 +28,7 @@ const defaultData = {
     quickSkills: ['Python', 'PyTorch', 'OpenCV', 'Linux', 'Docker', 'Node.js'],
     stats: [
       { label: 'CGPA',           value: 8.5,  decimals: 1, suffix: '/10', from: 0 },
-      { label: 'Hackathons Won', value: 2,    decimals: 0, suffix: '',    from: 0 },
+      { label: 'Hackathons Won', value: 3,    decimals: 0, suffix: '',    from: 0 },
       { label: 'AI/ML Projects', value: 3,    decimals: 0, suffix: '+',   from: 0 },
       { label: 'Grad Year',      value: 2027, decimals: 0, suffix: '',    from: 2020 },
     ],
@@ -134,12 +134,21 @@ const defaultData = {
       desc: 'Built high-performance FPS camera software dynamically adjusting ISO and imaging parameters at 60+ FPS, detecting overlapping pixels for real-time image-processing accuracy.',
       image: '/ach2.png',
     },
+    {
+      id: '3',
+      title: 'First Prize — Genesis 2026',
+      org: 'Trichy SRM Medical College Hospital and Research Centre',
+      date: '2026',
+      desc: 'Won First Prize for "Dextra" — an innovative assistive hand orthosis system designed to support neuromuscular rehabilitation by enabling improved hand movement through intelligent and adaptive AI/ML technology. Represented the Dept. of AI & ML, School of Computing.',
+      image: '',
+    },
   ],
 
   // Carousel images — add your own achievement photos here
   achievementImages: [
     { id: '1', url: '/ach1.png',  caption: 'Chem-E-Ignite 2025 · IIT Madras', sub: 'Winner — Startup Pitch' },
     { id: '2', url: '/ach2.png',  caption: 'Prayan 2026 Hackathon · NIT Trichy', sub: 'Winner — Sponsored by Khel.ai' },
+    { id: '3', url: '',           caption: 'Genesis 2026 · SRM Medical College', sub: 'First Prize — Dextra (Hand Orthosis)' },
   ],
 
   experience: {
