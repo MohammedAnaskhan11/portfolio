@@ -3,8 +3,16 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Trophy, ChevronLeft, ChevronRight } from 'lucide-react';
 import { useData } from '../context/DataContext';
 import { supabase } from '../lib/supabase';
+import defaultData from '../data/defaultData';
 
 const BUCKET = 'achievement-images';
+
+// Build a URL→{caption,sub} map from defaultData so captions survive stale Supabase cache
+const DEFAULT_CAPTION_MAP = new Map(
+  (defaultData.achievementImages || [])
+    .filter(d => d.url && d.url.startsWith('http'))
+    .map(d => [d.url, { caption: d.caption, sub: d.sub }])
+);
 
 async function loadStorageImages() {
   if (!supabase) return [];
@@ -16,11 +24,13 @@ async function loadStorageImages() {
     const imgs = data.filter(f => /\.(jpg|jpeg|png|webp|gif|svg)$/i.test(f.name));
     return imgs.map(f => {
       const { data: { publicUrl } } = supabase.storage.from(BUCKET).getPublicUrl(f.name);
+      // Use defaultData caption if URL matches, else generate from filename
+      const mapped = DEFAULT_CAPTION_MAP.get(publicUrl);
       return {
         id: f.name,
         url: publicUrl,
-        caption: f.name.replace(/\.[^.]+$/, '').replace(/[-_]/g, ' ').replace(/^ach \d+ /i, ''),
-        sub: '',
+        caption: mapped?.caption || f.name.replace(/\.[^.]+$/, '').replace(/[_-]/g, ' ').replace(/^ach \d+$/i, 'Achievement Photo'),
+        sub: mapped?.sub || '',
       };
     });
   } catch { return []; }
@@ -149,18 +159,12 @@ export default function Achievements() {
 
   useEffect(() => {
     loadStorageImages().then(storageImgs => {
-      if (storageImgs.length === 0) return;
-      const staticImgs = data.achievementImages || [];
-      // Static images with valid URLs take priority (they have proper captions)
-      const withUrls = staticImgs.filter(s => s.url);
-      // Only add Supabase images whose URLs are NOT already listed in static data
-      const staticUrlSet = new Set(withUrls.map(s => s.url));
-      const extra = storageImgs.filter(s => !staticUrlSet.has(s.url));
-      const merged = [...withUrls, ...extra];
+      // Always show local images (ach1.png, ach2.png) + Supabase images
+      const localImgs = defaultData.achievementImages.filter(d => d.url && !d.url.startsWith('http'));
+      const merged = [...localImgs, ...storageImgs];
       if (merged.length > 0) setImages(merged);
     });
   }, []);
-
 
   return (
     <section id="achievements" className="py-28 px-6 max-w-6xl mx-auto">
