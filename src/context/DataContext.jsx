@@ -24,10 +24,23 @@ function deepMerge(base, override) {
   return result;
 }
 
+// Smart merge: for arrays, supplement Supabase data with new defaultData items (by id)
+function smartArrayMerge(base, override) {
+  const result = deepMerge(base, override);
+  for (const key of Object.keys(base)) {
+    if (Array.isArray(base[key]) && Array.isArray(override[key])) {
+      const existingIds = new Set(override[key].map(item => item?.id).filter(Boolean));
+      const missing = base[key].filter(item => item?.id && !existingIds.has(item.id));
+      if (missing.length > 0) result[key] = [...override[key], ...missing];
+    }
+  }
+  return result;
+}
+
 function loadFromLocal() {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
-    if (raw) return deepMerge(defaultData, JSON.parse(raw));
+    if (raw) return smartArrayMerge(defaultData, JSON.parse(raw));
   } catch (_) {}
   return defaultData;
 }
@@ -45,7 +58,7 @@ async function fetchFromSupabase() {
   if (error || !data || data.length === 0) return null;
   const obj = {};
   for (const row of data) obj[row.key] = row.value;
-  return Object.keys(obj).length ? deepMerge(defaultData, obj) : null;
+  return Object.keys(obj).length ? smartArrayMerge(defaultData, obj) : null;
 }
 
 // ── upsert one section to Supabase ─────────────────────────────────

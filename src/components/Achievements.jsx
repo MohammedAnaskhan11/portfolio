@@ -24,8 +24,11 @@ async function loadStorageImages() {
     const imgs = data.filter(f => /\.(jpg|jpeg|png|webp|gif|svg)$/i.test(f.name));
     return imgs.map(f => {
       const { data: { publicUrl } } = supabase.storage.from(BUCKET).getPublicUrl(f.name);
-      // Use defaultData caption if URL matches, else generate from filename
-      const mapped = DEFAULT_CAPTION_MAP.get(publicUrl);
+      // Use defaultData caption if URL matches (exact) or filename stem matches (handles .jpg vs .jpeg)
+      const stem = f.name.replace(/\.[^.]+$/, ''); // filename without extension
+      const mapped = DEFAULT_CAPTION_MAP.get(publicUrl) ||
+        [...DEFAULT_CAPTION_MAP.entries()].find(([url]) => url.includes(stem))?.[1];
+
       return {
         id: f.name,
         url: publicUrl,
