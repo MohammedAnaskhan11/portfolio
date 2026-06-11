@@ -28,7 +28,7 @@ const defaultData = {
     quickSkills: ['Python', 'PyTorch', 'OpenCV', 'Linux', 'Docker', 'Node.js'],
     stats: [
       { label: 'CGPA',           value: 8.5,  decimals: 1, suffix: '/10', from: 0 },
-      { label: 'Hackathons Won', value: 3,    decimals: 0, suffix: '',    from: 0 },
+      { label: 'Hackathons Won', value: 2,    decimals: 0, suffix: '',    from: 0 },
       { label: 'AI/ML Projects', value: 3,    decimals: 0, suffix: '+',   from: 0 },
       { label: 'Grad Year',      value: 2027, decimals: 0, suffix: '',    from: 2020 },
     ],
