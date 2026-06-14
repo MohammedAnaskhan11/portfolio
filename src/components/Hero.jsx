@@ -122,7 +122,7 @@ export default function Hero() {
               style={{ background: 'linear-gradient(135deg, rgb(var(--c-primary)), rgb(var(--c-secondary)))', color: 'white' }}>
               View Projects
             </a>
-            <a href="/resume.pdf" target="_blank" rel="noopener noreferrer"
+            <a href="/resume.pdf" download="Mohammed_Anas_Khan_Resume.pdf"
               className="inline-flex items-center gap-2 rounded-xl px-6 py-2.5 text-sm font-semibold transition-all duration-300 hover:scale-[1.03]"
               style={{ border: '1px solid rgba(var(--c-primary)/0.4)', color: 'rgb(var(--c-primary))' }}>
               <Download className="w-4 h-4" /> Resume
