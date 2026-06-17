@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Copy, Check, Heart, Coffee, Smartphone, Zap } from 'lucide-react';
+import { Copy, Check, Heart, Smartphone, Zap, ExternalLink, IndianRupee } from 'lucide-react';
 
 const UPI_ID   = 'smohammedanaskhan@oksbi';
 const UPI_NAME = 'Mohammed Anas Khan';
@@ -9,14 +9,22 @@ const UPI_NAME = 'Mohammed Anas Khan';
 const UPI_URI  = `upi://pay?pa=${encodeURIComponent(UPI_ID)}&pn=${encodeURIComponent(UPI_NAME)}&cu=INR`;
 const QR_URL   = `https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=${encodeURIComponent(UPI_URI)}&color=3ef2d0&bgcolor=080a12&qzone=2&margin=0`;
 
-// Buy Me a Coffee placeholder — replace with real link once you create an account
-const BMC_URL  = 'https://www.buymeacoffee.com/mohammedanaskhan';
+// ── Replace with your Razorpay.me link once you create an account ──
+// Create at: https://razorpay.me → Sign up → Create Payment Page
+const RAZORPAY_URL = 'https://razorpay.me/@mohammedanaskhan';
+
+const AMOUNTS = [
+  { label: '₹49',  value: 49  },
+  { label: '₹99',  value: 99  },
+  { label: '₹199', value: 199 },
+  { label: 'Custom', value: null },
+];
 
 const apps = [
-  { label: 'GPay',   color: '#4285F4' },
-  { label: 'PhonePe',color: '#5f259f' },
-  { label: 'Paytm',  color: '#002970' },
-  { label: 'BHIM',   color: '#00639b' },
+  { label: 'GPay',    color: '#4285F4' },
+  { label: 'PhonePe', color: '#5f259f' },
+  { label: 'Paytm',   color: '#002970' },
+  { label: 'BHIM',    color: '#00639b' },
 ];
 
 export default function Support() {
@@ -133,31 +141,60 @@ export default function Support() {
           {/* Buy Me a Coffee card */}
           <div className="relative group">
             <div className="absolute -inset-[1px] rounded-2xl opacity-50 group-hover:opacity-90 transition-opacity duration-500"
-              style={{ background: 'linear-gradient(135deg,rgba(255,189,46,0.5),rgba(255,100,60,0.4))' }} />
+              style={{ background: 'linear-gradient(135deg,rgba(82,143,240,0.5),rgba(7,38,84,0.8))' }} />
             <div className="relative rounded-2xl p-7 flex flex-col gap-5"
               style={{ background: 'rgba(8,10,18,0.96)', backdropFilter: 'blur(20px)' }}>
+
+              {/* Razorpay header */}
               <div className="flex items-center gap-3">
-                <div className="w-12 h-12 rounded-xl flex items-center justify-center text-2xl"
-                  style={{ background: 'linear-gradient(135deg,rgba(255,189,46,0.2),rgba(255,100,60,0.15))' }}>
-                  ☕
+                <div className="w-12 h-12 rounded-xl flex items-center justify-center"
+                  style={{ background: 'linear-gradient(135deg,rgba(82,143,240,0.25),rgba(7,38,84,0.3))' }}>
+                  <IndianRupee className="w-5 h-5" style={{ color: '#528FF0' }} />
                 </div>
                 <div>
-                  <p className="text-white font-bold text-base">Buy Me a Coffee</p>
-                  <p className="text-gray-500 text-xs font-mono">Support via international cards</p>
+                  <div className="flex items-center gap-2">
+                    <p className="text-white font-bold text-base">Pay via Razorpay</p>
+                    <span className="text-[10px] font-mono px-2 py-0.5 rounded-full border"
+                      style={{ color: '#528FF0', borderColor: 'rgba(82,143,240,0.3)', background: 'rgba(82,143,240,0.08)' }}>
+                      Secure
+                    </span>
+                  </div>
+                  <p className="text-gray-500 text-xs font-mono">Cards · Net Banking · Wallets · UPI</p>
                 </div>
               </div>
+
               <p className="text-gray-400 text-sm leading-relaxed">
-                If you're outside India or prefer card payments, you can support me on
-                Buy Me a Coffee. Every contribution helps me build more open-source projects!
+                Support my AI/ML research and open-source work. Choose an amount or enter a custom one — all major Indian payment methods accepted.
               </p>
-              <a href={BMC_URL} target="_blank" rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2 w-full py-3 rounded-xl font-semibold text-sm transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]"
-                style={{ background: 'linear-gradient(135deg,#FFBD2E,#FF643C)', color: '#1a0a00' }}>
-                <Coffee className="w-4 h-4" />
-                Buy Me a Coffee ☕
+
+              {/* Amount selector */}
+              <div className="grid grid-cols-4 gap-2">
+                {AMOUNTS.map(({ label }) => (
+                  <a key={label} href={RAZORPAY_URL} target="_blank" rel="noopener noreferrer"
+                    className="flex items-center justify-center py-2 rounded-xl text-xs font-mono font-bold border transition-all duration-200 hover:scale-[1.05]"
+                    style={{ borderColor: 'rgba(82,143,240,0.3)', color: '#528FF0', background: 'rgba(82,143,240,0.08)' }}
+                    onMouseEnter={e => { e.currentTarget.style.background='rgba(82,143,240,0.18)'; e.currentTarget.style.borderColor='rgba(82,143,240,0.6)'; }}
+                    onMouseLeave={e => { e.currentTarget.style.background='rgba(82,143,240,0.08)'; e.currentTarget.style.borderColor='rgba(82,143,240,0.3)'; }}>
+                    {label}
+                  </a>
+                ))}
+              </div>
+
+              {/* Main CTA */}
+              <a href={RAZORPAY_URL} target="_blank" rel="noopener noreferrer"
+                className="inline-flex items-center justify-center gap-2 w-full py-3 rounded-xl font-bold text-sm transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]"
+                style={{ background: 'linear-gradient(135deg,#528FF0,#072654)', color: '#fff' }}>
+                <IndianRupee className="w-4 h-4" />
+                Support via Razorpay
+                <ExternalLink className="w-3.5 h-3.5 opacity-70" />
               </a>
+
+              <p className="text-center text-[11px] font-mono text-gray-600">
+                🔒 Powered by Razorpay · 256-bit SSL encrypted
+              </p>
             </div>
           </div>
+
 
           {/* Why support card */}
           <div className="rounded-2xl p-7 border border-white/5"
