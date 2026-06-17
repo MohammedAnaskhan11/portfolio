@@ -16,6 +16,7 @@ import Contact from './components/Contact';
 import LoadingScreen from './components/LoadingScreen';
 import ScrollToTop from './components/ScrollToTop';
 import AdminPage from './pages/AdminPage';
+import Support from './components/Support';
 
 // ── Public portfolio ────────────────────────────────────────────────
 function Portfolio() {
@@ -37,6 +38,7 @@ function Portfolio() {
           <Achievements />
           <Experience />
           <Contact />
+          <Support />
         </main>
         <footer className="py-8 border-t border-[var(--glass-border)] text-center">
           <p className="font-mono text-xs text-subtle">
