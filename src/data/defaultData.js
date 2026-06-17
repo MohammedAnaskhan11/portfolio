@@ -124,7 +124,7 @@ const defaultData = {
       org: 'IIT Madras',
       date: '16 Mar 2025',
       desc: "Presented ZenithCrom, an AI-driven vertical farming system aligned with UN Sustainable Development Goals, winning the startup pitch competition at one of India's premier technology institutes.",
-      image: '/ach1.png',
+      image: '',
     },
     {
       id: '2',
@@ -132,7 +132,7 @@ const defaultData = {
       org: 'NIT Trichy · Sponsored by Khel.ai',
       date: 'Feb 2026',
       desc: 'Built high-performance FPS camera software dynamically adjusting ISO and imaging parameters at 60+ FPS, detecting overlapping pixels for real-time image-processing accuracy.',
-      image: '/ach2.png',
+      image: '',
     },
     {
       id: '3',
@@ -146,8 +146,6 @@ const defaultData = {
 
   // Carousel images — add your own achievement photos here
   achievementImages: [
-    { id: '1', url: '/ach1.png',  caption: 'Chem-E-Ignite 2025 · IIT Madras', sub: 'Winner — Startup Pitch' },
-    { id: '2', url: '/ach2.png',  caption: 'Prayan 2026 Hackathon · NIT Trichy', sub: 'Winner — Sponsored by Khel.ai' },
     { id: '3', url: 'https://kellarbpqpgpxzimzsmv.supabase.co/storage/v1/object/public/achievement-images/ach_1781188731896.jpg', caption: 'Genesis 2026 Winner', sub: 'First Prize — Dextra Project · SRM Medical College' },
   ],
 
